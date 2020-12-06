@@ -5,6 +5,11 @@
  */
 package app.interfaces;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.xml.bind.DatatypeConverter;
+
 /**
  *
  * @author Sandaru
@@ -14,8 +19,26 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    
+    static int xx, yy;
+    static Chat_ball chat_ball;
+    
     public Login() {
         initComponents();
+        
+        Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(screen_size.width-425, getY());
+        
+        //when app on
+        signin_panel.setVisible(true);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+        
+        signin_default();
     }
 
     /**
@@ -28,6 +51,10 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         layered_pane = new javax.swing.JLayeredPane();
+        title_panel = new javax.swing.JPanel();
+        titlebar = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
         signin_panel = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         username_icon = new javax.swing.JLabel();
@@ -44,19 +71,126 @@ public class Login extends javax.swing.JFrame {
         forgot_password_hover = new javax.swing.JTextField();
         sign_up_link = new javax.swing.JTextField();
         sign_up_link_hover = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        signin_copyrights = new javax.swing.JLabel();
         signin_footer = new javax.swing.JLabel();
         signup_panel = new javax.swing.JPanel();
-        title_panel = new javax.swing.JPanel();
-        titlebar = new javax.swing.JLabel();
-        minimize = new javax.swing.JLabel();
-        close = new javax.swing.JLabel();
+        signup_profile_pic = new javax.swing.JLabel();
+        signup_email = new javax.swing.JTextField();
+        signup_email_line = new javax.swing.JLabel();
+        signup_username = new javax.swing.JTextField();
+        signup_username_line = new javax.swing.JLabel();
+        signup_password = new javax.swing.JPasswordField();
+        signup_eye_open_icon = new javax.swing.JLabel();
+        signup_eye_close_icon = new javax.swing.JLabel();
+        signup_password_line = new javax.swing.JLabel();
+        signup_nickname_line = new javax.swing.JLabel();
+        signup_nickname = new javax.swing.JTextField();
+        signup_btn = new javax.swing.JLabel();
+        signup_error = new javax.swing.JLabel();
+        signin_link = new javax.swing.JTextField();
+        signin_link_hover = new javax.swing.JTextField();
+        signup_copyrights = new javax.swing.JLabel();
+        signup_footer = new javax.swing.JLabel();
+        forgot_password_panel = new javax.swing.JPanel();
+        fp_logo = new javax.swing.JLabel();
+        fp_resend_code = new javax.swing.JLabel();
+        fp_description = new javax.swing.JLabel();
+        fp_recovery_code = new javax.swing.JTextField();
+        fp_recovery_code_line = new javax.swing.JLabel();
+        fp_confirm_btn = new javax.swing.JLabel();
+        fp_error = new javax.swing.JLabel();
+        fp_signin_link = new javax.swing.JTextField();
+        fp_signin_link_hover = new javax.swing.JTextField();
+        fp_copyrights = new javax.swing.JLabel();
+        fp_footer = new javax.swing.JLabel();
+        chat_list_panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        chat_area_panel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        setting_panel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        update_panel = new javax.swing.JPanel();
+        signup_profile_pic1 = new javax.swing.JLabel();
+        signup_email1 = new javax.swing.JTextField();
+        signup_email_line1 = new javax.swing.JLabel();
+        signup_username1 = new javax.swing.JTextField();
+        signup_username_line1 = new javax.swing.JLabel();
+        signup_password1 = new javax.swing.JPasswordField();
+        signup_eye_open_icon1 = new javax.swing.JLabel();
+        signup_eye_close_icon1 = new javax.swing.JLabel();
+        signup_password_line1 = new javax.swing.JLabel();
+        signup_nickname_line1 = new javax.swing.JLabel();
+        signup_nickname1 = new javax.swing.JTextField();
+        signup_btn1 = new javax.swing.JLabel();
+        signup_error1 = new javax.swing.JLabel();
+        signin_link1 = new javax.swing.JTextField();
+        signin_link_hover1 = new javax.swing.JTextField();
+        signup_copyrights1 = new javax.swing.JLabel();
+        signup_footer1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         layered_pane.setBackground(new java.awt.Color(28, 36, 47));
+
+        title_panel.setBackground(new java.awt.Color(28, 36, 47));
+
+        titlebar.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        titlebar.setForeground(new java.awt.Color(111, 117, 124));
+        titlebar.setText("  Chat App");
+        titlebar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        titlebar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                titlebarMouseDragged(evt);
+            }
+        });
+        titlebar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                titlebarMousePressed(evt);
+            }
+        });
+
+        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/minimize.png"))); // NOI18N
+        minimize.setToolTipText("Minimize");
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+
+        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/close.png"))); // NOI18N
+        close.setToolTipText("Close");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
+        title_panel.setLayout(title_panelLayout);
+        title_panelLayout.setHorizontalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(title_panelLayout.createSequentialGroup()
+                .addComponent(titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(minimize)
+                .addComponent(close)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        title_panelLayout.setVerticalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, title_panelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         signin_panel.setBackground(new java.awt.Color(28, 36, 47));
         signin_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -133,6 +267,11 @@ public class Login extends javax.swing.JFrame {
 
         signin_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/signin_pink.png"))); // NOI18N
         signin_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signin_btnMouseClicked(evt);
+            }
+        });
         signin_panel.add(signin_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 200, 30));
 
         signin_error.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
@@ -165,6 +304,9 @@ public class Login extends javax.swing.JFrame {
         forgot_password_hover.setBorder(null);
         forgot_password_hover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         forgot_password_hover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgot_password_hoverMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 forgot_password_hoverMouseExited(evt);
             }
@@ -190,6 +332,7 @@ public class Login extends javax.swing.JFrame {
         });
         signin_panel.add(sign_up_link, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 50, 20));
 
+        sign_up_link_hover.setEditable(false);
         sign_up_link_hover.setBackground(new java.awt.Color(28, 36, 47));
         sign_up_link_hover.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
         sign_up_link_hover.setForeground(new java.awt.Color(206, 47, 131));
@@ -198,17 +341,20 @@ public class Login extends javax.swing.JFrame {
         sign_up_link_hover.setBorder(null);
         sign_up_link_hover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sign_up_link_hover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sign_up_link_hoverMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 sign_up_link_hoverMouseExited(evt);
             }
         });
         signin_panel.add(sign_up_link_hover, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 50, 20));
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html><center>Copyrights &copy; 2020 Team Semicolon<br>All rights reserved</center></html>");
-        signin_panel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 360, 30));
+        signin_copyrights.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
+        signin_copyrights.setForeground(new java.awt.Color(255, 255, 255));
+        signin_copyrights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signin_copyrights.setText("<html><center>Copyrights &copy; 2020 Team Semicolon<br>All rights reserved</center></html>");
+        signin_panel.add(signin_copyrights, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 360, 30));
 
         signin_footer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/footer.gif"))); // NOI18N
         signin_panel.add(signin_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 375, 130));
@@ -216,54 +362,494 @@ public class Login extends javax.swing.JFrame {
         signup_panel.setBackground(new java.awt.Color(28, 36, 47));
         signup_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        title_panel.setBackground(new java.awt.Color(28, 36, 47));
-
-        titlebar.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
-        titlebar.setForeground(new java.awt.Color(111, 117, 124));
-        titlebar.setText("  Chat App");
-        titlebar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/minimize.png"))); // NOI18N
-        minimize.setToolTipText("Minimize");
-        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+        signup_profile_pic.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signup_profile_pic.setForeground(new java.awt.Color(111, 117, 124));
+        signup_profile_pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_profile_pic.setText("Profile Picture");
+        signup_profile_pic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(111, 117, 124), 2));
+        signup_profile_pic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_profile_pic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                minimizeMouseClicked(evt);
+                signup_profile_picMouseClicked(evt);
             }
         });
+        signup_panel.add(signup_profile_pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 120, 120));
 
-        close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/close.png"))); // NOI18N
-        close.setToolTipText("Close");
-        close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        close.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                closeMouseClicked(evt);
+        signup_email.setBackground(new java.awt.Color(28, 36, 47));
+        signup_email.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_email.setForeground(new java.awt.Color(111, 117, 124));
+        signup_email.setText("Email");
+        signup_email.setAutoscrolls(false);
+        signup_email.setBorder(null);
+        signup_email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_emailFocusLost(evt);
             }
         });
+        signup_email.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_emailMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 240, 20));
 
-        javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
-        title_panel.setLayout(title_panelLayout);
-        title_panelLayout.setHorizontalGroup(
-            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(title_panelLayout.createSequentialGroup()
-                .addComponent(titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(minimize)
-                .addComponent(close)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        title_panelLayout.setVerticalGroup(
-            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, title_panelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        signup_email_line.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_email_line.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        signup_panel.add(signup_email_line, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, 10));
 
+        signup_username.setBackground(new java.awt.Color(28, 36, 47));
+        signup_username.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_username.setForeground(new java.awt.Color(111, 117, 124));
+        signup_username.setText("Username");
+        signup_username.setAutoscrolls(false);
+        signup_username.setBorder(null);
+        signup_username.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_usernameFocusLost(evt);
+            }
+        });
+        signup_username.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_usernameMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 240, 20));
+
+        signup_username_line.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_username_line.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        signup_panel.add(signup_username_line, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, 10));
+
+        signup_password.setBackground(new java.awt.Color(28, 36, 47));
+        signup_password.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_password.setForeground(new java.awt.Color(111, 117, 124));
+        signup_password.setText("Password");
+        signup_password.setBorder(null);
+        signup_password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_passwordFocusLost(evt);
+            }
+        });
+        signup_password.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_passwordMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 220, 20));
+
+        signup_eye_open_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/eye_open.png"))); // NOI18N
+        signup_eye_open_icon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_eye_open_icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_eye_open_iconMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_eye_open_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 20, 20));
+
+        signup_eye_close_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/eye_close.png"))); // NOI18N
+        signup_eye_close_icon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_eye_close_icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_eye_close_iconMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_eye_close_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 20, 20));
+
+        signup_password_line.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_password_line.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        signup_panel.add(signup_password_line, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, 10));
+
+        signup_nickname_line.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_nickname_line.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        signup_panel.add(signup_nickname_line, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, 10));
+
+        signup_nickname.setBackground(new java.awt.Color(28, 36, 47));
+        signup_nickname.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_nickname.setForeground(new java.awt.Color(111, 117, 124));
+        signup_nickname.setText("Nick name");
+        signup_nickname.setAutoscrolls(false);
+        signup_nickname.setBorder(null);
+        signup_nickname.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_nicknameFocusLost(evt);
+            }
+        });
+        signup_nickname.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_nicknameMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_nickname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 240, 20));
+
+        signup_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/signup_pink.png"))); // NOI18N
+        signup_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_btnMouseClicked(evt);
+            }
+        });
+        signup_panel.add(signup_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 200, 30));
+
+        signup_error.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signup_error.setForeground(new java.awt.Color(206, 47, 131));
+        signup_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_error.setText("username and password are required");
+        signup_panel.add(signup_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 310, -1));
+
+        signin_link.setBackground(new java.awt.Color(28, 36, 47));
+        signin_link.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signin_link.setForeground(new java.awt.Color(111, 117, 124));
+        signin_link.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        signin_link.setText("Sign In");
+        signin_link.setBorder(null);
+        signin_link.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_link.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signin_linkMouseEntered(evt);
+            }
+        });
+        signin_link.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signin_linkActionPerformed(evt);
+            }
+        });
+        signup_panel.add(signin_link, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 50, 20));
+
+        signin_link_hover.setEditable(false);
+        signin_link_hover.setBackground(new java.awt.Color(28, 36, 47));
+        signin_link_hover.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signin_link_hover.setForeground(new java.awt.Color(206, 47, 131));
+        signin_link_hover.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        signin_link_hover.setText("Sign In");
+        signin_link_hover.setBorder(null);
+        signin_link_hover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_link_hover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signin_link_hoverMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signin_link_hoverMouseExited(evt);
+            }
+        });
+        signup_panel.add(signin_link_hover, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 50, 20));
+
+        signup_copyrights.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
+        signup_copyrights.setForeground(new java.awt.Color(255, 255, 255));
+        signup_copyrights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_copyrights.setText("<html><center>Copyrights &copy; 2020 Team Semicolon<br>All rights reserved</center></html>");
+        signup_panel.add(signup_copyrights, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 360, 30));
+
+        signup_footer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/footer.gif"))); // NOI18N
+        signup_panel.add(signup_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 375, 130));
+
+        forgot_password_panel.setBackground(new java.awt.Color(28, 36, 47));
+        forgot_password_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fp_logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/logo_pink.png"))); // NOI18N
+        forgot_password_panel.add(fp_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 120, 120));
+
+        fp_resend_code.setFont(new java.awt.Font("Bookman Old Style", 1, 11)); // NOI18N
+        fp_resend_code.setForeground(new java.awt.Color(206, 47, 131));
+        fp_resend_code.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fp_resend_code.setText("resend code.");
+        fp_resend_code.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        forgot_password_panel.add(fp_resend_code, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 80, -1));
+
+        fp_description.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        fp_description.setForeground(new java.awt.Color(111, 117, 124));
+        fp_description.setText("<html>We've sent a recovery code to your email.<br>Please enter the code to change your password. If you haven't received any mail, please</html>");
+        forgot_password_panel.add(fp_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 240, 70));
+
+        fp_recovery_code.setBackground(new java.awt.Color(28, 36, 47));
+        fp_recovery_code.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        fp_recovery_code.setForeground(new java.awt.Color(111, 117, 124));
+        fp_recovery_code.setText("Recovery code");
+        fp_recovery_code.setAutoscrolls(false);
+        fp_recovery_code.setBorder(null);
+        fp_recovery_code.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fp_recovery_codeFocusLost(evt);
+            }
+        });
+        fp_recovery_code.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fp_recovery_codeMouseClicked(evt);
+            }
+        });
+        forgot_password_panel.add(fp_recovery_code, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 240, 20));
+
+        fp_recovery_code_line.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        fp_recovery_code_line.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        forgot_password_panel.add(fp_recovery_code_line, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, 10));
+
+        fp_confirm_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/confirm_pink.png"))); // NOI18N
+        fp_confirm_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        forgot_password_panel.add(fp_confirm_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 200, 30));
+
+        fp_error.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        fp_error.setForeground(new java.awt.Color(206, 47, 131));
+        fp_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fp_error.setText("username and password are required");
+        forgot_password_panel.add(fp_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 310, -1));
+
+        fp_signin_link.setBackground(new java.awt.Color(28, 36, 47));
+        fp_signin_link.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        fp_signin_link.setForeground(new java.awt.Color(111, 117, 124));
+        fp_signin_link.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fp_signin_link.setText("Sign In");
+        fp_signin_link.setBorder(null);
+        fp_signin_link.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fp_signin_link.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                fp_signin_linkMouseEntered(evt);
+            }
+        });
+        forgot_password_panel.add(fp_signin_link, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 50, 20));
+
+        fp_signin_link_hover.setEditable(false);
+        fp_signin_link_hover.setBackground(new java.awt.Color(28, 36, 47));
+        fp_signin_link_hover.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        fp_signin_link_hover.setForeground(new java.awt.Color(206, 47, 131));
+        fp_signin_link_hover.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fp_signin_link_hover.setText("Sign In");
+        fp_signin_link_hover.setBorder(null);
+        fp_signin_link_hover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fp_signin_link_hover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fp_signin_link_hoverMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fp_signin_link_hoverMouseExited(evt);
+            }
+        });
+        forgot_password_panel.add(fp_signin_link_hover, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 50, 20));
+
+        fp_copyrights.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
+        fp_copyrights.setForeground(new java.awt.Color(255, 255, 255));
+        fp_copyrights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fp_copyrights.setText("<html><center>Copyrights &copy; 2020 Team Semicolon<br>All rights reserved</center></html>");
+        forgot_password_panel.add(fp_copyrights, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 360, 30));
+
+        fp_footer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/footer.gif"))); // NOI18N
+        forgot_password_panel.add(fp_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 375, 130));
+
+        chat_list_panel.setBackground(new java.awt.Color(28, 36, 47));
+        chat_list_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(111, 117, 124));
+        jLabel1.setText("  Chats");
+        chat_list_panel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 30));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/setting_pink.png"))); // NOI18N
+        chat_list_panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
+
+        chat_area_panel.setBackground(new java.awt.Color(28, 36, 47));
+        chat_area_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(111, 117, 124));
+        jLabel3.setText("  Chats");
+        chat_area_panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/setting_pink.png"))); // NOI18N
+        chat_area_panel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
+
+        setting_panel.setBackground(new java.awt.Color(28, 36, 47));
+        setting_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(111, 117, 124));
+        jLabel5.setText("  Chats");
+        setting_panel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 30));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/setting_pink.png"))); // NOI18N
+        setting_panel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
+
+        update_panel.setBackground(new java.awt.Color(28, 36, 47));
+        update_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        signup_profile_pic1.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signup_profile_pic1.setForeground(new java.awt.Color(111, 117, 124));
+        signup_profile_pic1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_profile_pic1.setText("Profile Picture");
+        signup_profile_pic1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(111, 117, 124), 2));
+        signup_profile_pic1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_profile_pic1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_profile_pic1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_profile_pic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 120, 120));
+
+        signup_email1.setBackground(new java.awt.Color(28, 36, 47));
+        signup_email1.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_email1.setForeground(new java.awt.Color(111, 117, 124));
+        signup_email1.setText("Email");
+        signup_email1.setAutoscrolls(false);
+        signup_email1.setBorder(null);
+        signup_email1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_email1FocusLost(evt);
+            }
+        });
+        signup_email1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_email1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 240, 20));
+
+        signup_email_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_email_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        update_panel.add(signup_email_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, 10));
+
+        signup_username1.setBackground(new java.awt.Color(28, 36, 47));
+        signup_username1.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_username1.setForeground(new java.awt.Color(111, 117, 124));
+        signup_username1.setText("Username");
+        signup_username1.setAutoscrolls(false);
+        signup_username1.setBorder(null);
+        signup_username1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_username1FocusLost(evt);
+            }
+        });
+        signup_username1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_username1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 240, 20));
+
+        signup_username_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_username_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        update_panel.add(signup_username_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, 10));
+
+        signup_password1.setBackground(new java.awt.Color(28, 36, 47));
+        signup_password1.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_password1.setForeground(new java.awt.Color(111, 117, 124));
+        signup_password1.setText("Password");
+        signup_password1.setBorder(null);
+        signup_password1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_password1FocusLost(evt);
+            }
+        });
+        signup_password1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_password1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_password1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 220, 20));
+
+        signup_eye_open_icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/eye_open.png"))); // NOI18N
+        signup_eye_open_icon1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_eye_open_icon1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_eye_open_icon1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_eye_open_icon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 20, 20));
+
+        signup_eye_close_icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/eye_close.png"))); // NOI18N
+        signup_eye_close_icon1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signup_eye_close_icon1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_eye_close_icon1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_eye_close_icon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 20, 20));
+
+        signup_password_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_password_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        update_panel.add(signup_password_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, 10));
+
+        signup_nickname_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
+        signup_nickname_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        update_panel.add(signup_nickname_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, 10));
+
+        signup_nickname1.setBackground(new java.awt.Color(28, 36, 47));
+        signup_nickname1.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
+        signup_nickname1.setForeground(new java.awt.Color(111, 117, 124));
+        signup_nickname1.setText("Nick name");
+        signup_nickname1.setAutoscrolls(false);
+        signup_nickname1.setBorder(null);
+        signup_nickname1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                signup_nickname1FocusLost(evt);
+            }
+        });
+        signup_nickname1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_nickname1MouseClicked(evt);
+            }
+        });
+        update_panel.add(signup_nickname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 240, 20));
+
+        signup_btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/signup_pink.png"))); // NOI18N
+        signup_btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        update_panel.add(signup_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 200, 30));
+
+        signup_error1.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signup_error1.setForeground(new java.awt.Color(206, 47, 131));
+        signup_error1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_error1.setText("username and password are required");
+        update_panel.add(signup_error1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 310, -1));
+
+        signin_link1.setBackground(new java.awt.Color(28, 36, 47));
+        signin_link1.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signin_link1.setForeground(new java.awt.Color(111, 117, 124));
+        signin_link1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        signin_link1.setText("Sign In");
+        signin_link1.setBorder(null);
+        signin_link1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_link1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signin_link1MouseEntered(evt);
+            }
+        });
+        signin_link1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signin_link1ActionPerformed(evt);
+            }
+        });
+        update_panel.add(signin_link1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 50, 20));
+
+        signin_link_hover1.setEditable(false);
+        signin_link_hover1.setBackground(new java.awt.Color(28, 36, 47));
+        signin_link_hover1.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
+        signin_link_hover1.setForeground(new java.awt.Color(206, 47, 131));
+        signin_link_hover1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        signin_link_hover1.setText("Sign In");
+        signin_link_hover1.setBorder(null);
+        signin_link_hover1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signin_link_hover1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signin_link_hover1MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signin_link_hover1MouseExited(evt);
+            }
+        });
+        update_panel.add(signin_link_hover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 50, 20));
+
+        signup_copyrights1.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
+        signup_copyrights1.setForeground(new java.awt.Color(255, 255, 255));
+        signup_copyrights1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signup_copyrights1.setText("<html><center>Copyrights &copy; 2020 Team Semicolon<br>All rights reserved</center></html>");
+        update_panel.add(signup_copyrights1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 360, 30));
+
+        signup_footer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/footer.gif"))); // NOI18N
+        update_panel.add(signup_footer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 375, 130));
+
+        layered_pane.setLayer(title_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layered_pane.setLayer(signin_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layered_pane.setLayer(signup_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        layered_pane.setLayer(title_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layered_pane.setLayer(forgot_password_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layered_pane.setLayer(chat_list_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layered_pane.setLayer(chat_area_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layered_pane.setLayer(setting_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layered_pane.setLayer(update_panel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layered_paneLayout = new javax.swing.GroupLayout(layered_pane);
         layered_pane.setLayout(layered_paneLayout);
@@ -272,7 +858,26 @@ public class Login extends javax.swing.JFrame {
             .addComponent(signin_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(signup_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addComponent(signup_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(forgot_password_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(chat_list_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layered_paneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(chat_area_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layered_paneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(setting_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layered_paneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(update_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layered_paneLayout.setVerticalGroup(
             layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,6 +889,29 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
                     .addGap(0, 30, Short.MAX_VALUE)
                     .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
+                    .addGap(0, 30, Short.MAX_VALUE)
+                    .addComponent(forgot_password_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
+                    .addGap(0, 30, Short.MAX_VALUE)
+                    .addComponent(chat_list_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
+                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addComponent(chat_area_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layered_paneLayout.createSequentialGroup()
+                    .addGap(9, 9, 9)
+                    .addComponent(setting_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(21, Short.MAX_VALUE)))
+            .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
+                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addComponent(update_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         getContentPane().add(layered_pane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 375, 525));
@@ -325,15 +953,23 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_sign_up_link_hoverMouseExited
 
     private void eye_open_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_open_iconMouseClicked
-        eye_close_icon.setVisible(true);
-        eye_open_icon.setVisible(false);
-        password.setEchoChar((char)0);
+        if (password.getText().trim().equalsIgnoreCase("password")) {
+            
+        } else {
+            eye_close_icon.setVisible(true);
+            eye_open_icon.setVisible(false);
+            password.setEchoChar((char)0);
+        }
     }//GEN-LAST:event_eye_open_iconMouseClicked
 
     private void eye_close_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_close_iconMouseClicked
-        eye_open_icon.setVisible(true);
-        eye_close_icon.setVisible(false);
-        password.setEchoChar('●');
+        if (password.getText().trim().equalsIgnoreCase("password")) {
+            
+        } else {
+            eye_open_icon.setVisible(true);
+            eye_close_icon.setVisible(false);
+            password.setEchoChar('●');
+        }
     }//GEN-LAST:event_eye_close_iconMouseClicked
 
     private void usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usernameMouseClicked
@@ -351,15 +987,301 @@ public class Login extends javax.swing.JFrame {
     private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
         if (password.getText().trim().equalsIgnoreCase("")) {
             password.setText("Password");
+            password.setEchoChar((char)0);
         }
     }//GEN-LAST:event_passwordFocusLost
 
     private void passwordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passwordMouseClicked
         if (password.getText().trim().equalsIgnoreCase("password")) {
             password.setText(null);
+            password.setEchoChar('●');
         }
     }//GEN-LAST:event_passwordMouseClicked
 
+    private void signup_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_usernameFocusLost
+        if (signup_username.getText().trim().equalsIgnoreCase("")) {
+            signup_username.setText("Username");
+        }
+    }//GEN-LAST:event_signup_usernameFocusLost
+
+    private void signup_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_usernameMouseClicked
+        if (signup_username.getText().trim().equalsIgnoreCase("username")) {
+            signup_username.setText(null);
+        }
+    }//GEN-LAST:event_signup_usernameMouseClicked
+
+    private void signup_passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_passwordFocusLost
+        if (signup_password.getText().trim().equalsIgnoreCase("")) {
+            signup_password.setText("Password");
+            signup_password.setEchoChar((char)0);
+        }
+    }//GEN-LAST:event_signup_passwordFocusLost
+
+    private void signup_passwordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_passwordMouseClicked
+        if (signup_password.getText().trim().equalsIgnoreCase("password")) {
+            signup_password.setText(null);
+            signup_password.setEchoChar('●');
+        }
+    }//GEN-LAST:event_signup_passwordMouseClicked
+
+    private void signup_eye_open_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_open_iconMouseClicked
+        if (signup_password.getText().trim().equalsIgnoreCase("password")) {
+            
+        } else {
+            signup_eye_close_icon.setVisible(true);
+            signup_eye_open_icon.setVisible(false);
+            signup_password.setEchoChar((char)0);
+        }
+    }//GEN-LAST:event_signup_eye_open_iconMouseClicked
+
+    private void signup_eye_close_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_close_iconMouseClicked
+        if (signup_password.getText().trim().equalsIgnoreCase("password")) {
+            
+        } else {
+            signup_eye_open_icon.setVisible(true);
+            signup_eye_close_icon.setVisible(false);
+            signup_password.setEchoChar('●');
+        }
+    }//GEN-LAST:event_signup_eye_close_iconMouseClicked
+
+    private void signin_linkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_linkMouseEntered
+        signin_link.setVisible(false);
+        signin_link_hover.setVisible(true);
+    }//GEN-LAST:event_signin_linkMouseEntered
+
+    private void signin_link_hoverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_link_hoverMouseExited
+        signin_link_hover.setVisible(false);
+        signin_link.setVisible(true);
+    }//GEN-LAST:event_signin_link_hoverMouseExited
+
+    private void signin_linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signin_linkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signin_linkActionPerformed
+
+    private void sign_up_link_hoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sign_up_link_hoverMouseClicked
+        signup_default();
+    }//GEN-LAST:event_sign_up_link_hoverMouseClicked
+
+    private void signup_emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_emailFocusLost
+        if (signup_email.getText().trim().equalsIgnoreCase("")) {
+            signup_email.setText("Email");
+        }
+    }//GEN-LAST:event_signup_emailFocusLost
+
+    private void signup_emailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_emailMouseClicked
+        if (signup_email.getText().trim().equalsIgnoreCase("email")) {
+            signup_email.setText(null);
+        }
+    }//GEN-LAST:event_signup_emailMouseClicked
+
+    private void signup_nicknameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_nicknameFocusLost
+        if (signup_nickname.getText().trim().equalsIgnoreCase("")) {
+            signup_nickname.setText("Nick name");
+        }
+    }//GEN-LAST:event_signup_nicknameFocusLost
+
+    private void signup_nicknameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_nicknameMouseClicked
+        if (signup_nickname.getText().trim().equalsIgnoreCase("nick name")) {
+            signup_nickname.setText(null);
+        }
+    }//GEN-LAST:event_signup_nicknameMouseClicked
+
+    private void signin_link_hoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_link_hoverMouseClicked
+        signin_default();
+    }//GEN-LAST:event_signin_link_hoverMouseClicked
+
+    private void signup_profile_picMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_profile_picMouseClicked
+        
+    }//GEN-LAST:event_signup_profile_picMouseClicked
+
+    private void titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlebarMousePressed
+        xx = evt.getX();
+        yy = evt.getY();
+    }//GEN-LAST:event_titlebarMousePressed
+
+    private void titlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlebarMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+                
+        this.setLocation(x-xx, y-yy);
+    }//GEN-LAST:event_titlebarMouseDragged
+
+    private void fp_signin_linkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fp_signin_linkMouseEntered
+        fp_signin_link.setVisible(false);
+        fp_signin_link_hover.setVisible(true);
+    }//GEN-LAST:event_fp_signin_linkMouseEntered
+
+    private void fp_signin_link_hoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fp_signin_link_hoverMouseClicked
+        signin_default();
+    }//GEN-LAST:event_fp_signin_link_hoverMouseClicked
+
+    private void fp_signin_link_hoverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fp_signin_link_hoverMouseExited
+        fp_signin_link_hover.setVisible(false);
+        fp_signin_link.setVisible(true);
+    }//GEN-LAST:event_fp_signin_link_hoverMouseExited
+
+    private void fp_recovery_codeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fp_recovery_codeFocusLost
+        if (fp_recovery_code.getText().trim().equalsIgnoreCase("")) {
+            fp_recovery_code.setText("Recovery code");
+        }
+    }//GEN-LAST:event_fp_recovery_codeFocusLost
+
+    private void fp_recovery_codeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fp_recovery_codeMouseClicked
+        if (fp_recovery_code.getText().trim().equalsIgnoreCase("recovery code")) {
+            fp_recovery_code.setText(null);
+        }
+    }//GEN-LAST:event_fp_recovery_codeMouseClicked
+
+    private void forgot_password_hoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgot_password_hoverMouseClicked
+        forgot_password_default();
+    }//GEN-LAST:event_forgot_password_hoverMouseClicked
+
+    private void signup_profile_pic1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_profile_pic1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_profile_pic1MouseClicked
+
+    private void signup_email1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_email1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_email1FocusLost
+
+    private void signup_email1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_email1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_email1MouseClicked
+
+    private void signup_username1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_username1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_username1FocusLost
+
+    private void signup_username1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_username1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_username1MouseClicked
+
+    private void signup_password1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_password1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_password1FocusLost
+
+    private void signup_password1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_password1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_password1MouseClicked
+
+    private void signup_eye_open_icon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_open_icon1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_eye_open_icon1MouseClicked
+
+    private void signup_eye_close_icon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_close_icon1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_eye_close_icon1MouseClicked
+
+    private void signup_nickname1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_nickname1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_nickname1FocusLost
+
+    private void signup_nickname1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_nickname1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signup_nickname1MouseClicked
+
+    private void signin_link1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_link1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signin_link1MouseEntered
+
+    private void signin_link1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signin_link1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signin_link1ActionPerformed
+
+    private void signin_link_hover1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_link_hover1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signin_link_hover1MouseClicked
+
+    private void signin_link_hover1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_link_hover1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signin_link_hover1MouseExited
+
+    private void signin_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_btnMouseClicked
+        chat_list_default();
+    }//GEN-LAST:event_signin_btnMouseClicked
+
+    private void signup_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseClicked
+        signup_default();
+    }//GEN-LAST:event_signup_btnMouseClicked
+
+    public void signin_default() {
+        signin_panel.setVisible(true);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+        
+        password.setEchoChar((char)0);
+        eye_open_icon.setVisible(true);
+        eye_close_icon.setVisible(false);
+    }
+    
+    public void signup_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(true);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+        
+        signup_password.setEchoChar((char)0);
+        signup_eye_open_icon.setVisible(true);
+        signup_eye_close_icon.setVisible(false);
+    }
+    
+    public void forgot_password_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(true);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+    }
+    
+    public void chat_list_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(true);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+    }
+    
+    public void chat_area_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(true);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(false);
+    }
+    
+    public void setting_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(true);
+        update_panel.setVisible(false);
+    }
+    
+    public void update_default() {
+        signin_panel.setVisible(false);
+        signup_panel.setVisible(false);
+        forgot_password_panel.setVisible(false);
+        chat_list_panel.setVisible(false);
+        chat_area_panel.setVisible(false);
+        setting_panel.setVisible(false);
+        update_panel.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -396,27 +1318,83 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chat_area_panel;
+    private javax.swing.JPanel chat_list_panel;
     private javax.swing.JLabel close;
     private javax.swing.JLabel eye_close_icon;
     private javax.swing.JLabel eye_open_icon;
     private javax.swing.JTextField forgot_password;
     private javax.swing.JTextField forgot_password_hover;
+    private javax.swing.JPanel forgot_password_panel;
+    private javax.swing.JLabel fp_confirm_btn;
+    private javax.swing.JLabel fp_copyrights;
+    private javax.swing.JLabel fp_description;
+    private javax.swing.JLabel fp_error;
+    private javax.swing.JLabel fp_footer;
+    private javax.swing.JLabel fp_logo;
+    private javax.swing.JTextField fp_recovery_code;
+    private javax.swing.JLabel fp_recovery_code_line;
+    private javax.swing.JLabel fp_resend_code;
+    private javax.swing.JTextField fp_signin_link;
+    private javax.swing.JTextField fp_signin_link_hover;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane layered_pane;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel minimize;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel password_icon;
     private javax.swing.JLabel password_line;
+    private javax.swing.JPanel setting_panel;
     private javax.swing.JTextField sign_up_link;
     private javax.swing.JTextField sign_up_link_hover;
     private javax.swing.JLabel signin_btn;
+    private javax.swing.JLabel signin_copyrights;
     private javax.swing.JLabel signin_error;
     private javax.swing.JLabel signin_footer;
+    private javax.swing.JTextField signin_link;
+    private javax.swing.JTextField signin_link1;
+    private javax.swing.JTextField signin_link_hover;
+    private javax.swing.JTextField signin_link_hover1;
     private javax.swing.JPanel signin_panel;
+    private javax.swing.JLabel signup_btn;
+    private javax.swing.JLabel signup_btn1;
+    private javax.swing.JLabel signup_copyrights;
+    private javax.swing.JLabel signup_copyrights1;
+    private javax.swing.JTextField signup_email;
+    private javax.swing.JTextField signup_email1;
+    private javax.swing.JLabel signup_email_line;
+    private javax.swing.JLabel signup_email_line1;
+    private javax.swing.JLabel signup_error;
+    private javax.swing.JLabel signup_error1;
+    private javax.swing.JLabel signup_eye_close_icon;
+    private javax.swing.JLabel signup_eye_close_icon1;
+    private javax.swing.JLabel signup_eye_open_icon;
+    private javax.swing.JLabel signup_eye_open_icon1;
+    private javax.swing.JLabel signup_footer;
+    private javax.swing.JLabel signup_footer1;
+    private javax.swing.JTextField signup_nickname;
+    private javax.swing.JTextField signup_nickname1;
+    private javax.swing.JLabel signup_nickname_line;
+    private javax.swing.JLabel signup_nickname_line1;
     private javax.swing.JPanel signup_panel;
+    private javax.swing.JPasswordField signup_password;
+    private javax.swing.JPasswordField signup_password1;
+    private javax.swing.JLabel signup_password_line;
+    private javax.swing.JLabel signup_password_line1;
+    private javax.swing.JLabel signup_profile_pic;
+    private javax.swing.JLabel signup_profile_pic1;
+    private javax.swing.JTextField signup_username;
+    private javax.swing.JTextField signup_username1;
+    private javax.swing.JLabel signup_username_line;
+    private javax.swing.JLabel signup_username_line1;
     private javax.swing.JPanel title_panel;
     private javax.swing.JLabel titlebar;
+    private javax.swing.JPanel update_panel;
     private javax.swing.JTextField username;
     private javax.swing.JLabel username_icon;
     private javax.swing.JLabel username_line;
