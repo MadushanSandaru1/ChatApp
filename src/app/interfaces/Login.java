@@ -5,6 +5,7 @@
  */
 package app.interfaces;
 
+import app.dbmanager.DBManager;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -1122,8 +1123,7 @@ public class Login extends javax.swing.JFrame {
 //               BufferedImage bimg = this.decodeToImage(img);
 //               
 //               signup_profile_pic.setIcon(new ImageIcon(bimg));
-               
-  
+
            }catch(Exception e){
                System.out.println("Exception occurred : " + e.getMessage());
            }
@@ -1239,17 +1239,28 @@ public class Login extends javax.swing.JFrame {
     private void signup_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseClicked
         signup_default();
         
+        //get data from text boxes
         String email = signup_email.getText();
         String username  = signup_username.getText();
         String nickname = signup_nickname.getText();
         String password = signup_password.getText();
         
-        ArrayList<String> erorr = validateform(email,username,nickname,password);
+        //error array
+        ArrayList<String> error = validateform(email,username,nickname,password);
         
-        if(erorr.isEmpty()==false){
-            signup_error.setText(erorr.get(0));
+        if(error.isEmpty()==false){
+            signup_error.setText(error.get(0));
         }else{
             signup_error.setText(null);
+            //intsert details
+            String img = null;
+            ImageIcon avatar = (ImageIcon) signup_profile_pic.getIcon();
+            if(avatar!=null){
+                img = this.encodeToString(this.ImageIconToBufferedImage(avatar),"jpg"); 
+            }
+
+            DBManager.getDBM().insert(img, email, username, nickname, password);
+            
         }
         
         
