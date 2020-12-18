@@ -1,5 +1,5 @@
 package app.pojos;
-// Generated Dec 18, 2020 1:05:17 PM by Hibernate Tools 4.3.1
+// Generated Dec 18, 2020 3:57:46 PM by Hibernate Tools 4.3.1
 
 
 
@@ -13,7 +13,7 @@ public class User  implements java.io.Serializable {
      private String username;
      private String nickname;
      private String email;
-     private byte[] avatar;
+     private String avatar;
      private byte isDeleted;
      private String password;
 
@@ -28,7 +28,7 @@ public class User  implements java.io.Serializable {
         this.isDeleted = isDeleted;
         this.password = password;
     }
-    public User(String username, String nickname, String email, byte[] avatar, byte isDeleted, String password) {
+    public User(String username, String nickname, String email, String avatar, byte isDeleted, String password) {
        this.username = username;
        this.nickname = nickname;
        this.email = email;
@@ -65,11 +65,11 @@ public class User  implements java.io.Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return this.avatar;
     }
     
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
     public byte getIsDeleted() {

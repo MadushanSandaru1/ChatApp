@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 18, 2020 at 08:06 AM
+-- Generation Time: Dec 18, 2020 at 10:35 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) NOT NULL,
   `nickname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `avatar` blob,
+  `avatar` varchar(10000) DEFAULT NULL,
   `is_deleted` tinyint(4) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)

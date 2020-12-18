@@ -5,20 +5,22 @@
  */
 package app.interfaces;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.bind.DatatypeConverter;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -1114,7 +1116,14 @@ public class Login extends javax.swing.JFrame {
             ImageIcon icon = new ImageIcon(strfilepath); //string image path open as a image icon
             ImageIcon iconresized =  new ImageIcon(icon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)); //resize image icon fit for profile icon label
             signup_profile_pic.setText(null); // remove label text
-            signup_profile_pic.setIcon(iconresized); //set seleted image to profile icon label
+            signup_profile_pic.setIcon(iconresized); //set seleted image to profile icon label 
+            
+//               String img = this.encodeToString(this.ImageIconToBufferedImage(iconresized),"jpg"); 
+//               BufferedImage bimg = this.decodeToImage(img);
+//               
+//               signup_profile_pic.setIcon(new ImageIcon(bimg));
+               
+  
            }catch(Exception e){
                System.out.println("Exception occurred : " + e.getMessage());
            }
@@ -1350,6 +1359,55 @@ public class Login extends javax.swing.JFrame {
         }
         
         return errors;
+    }
+    
+    public BufferedImage ImageIconToBufferedImage(ImageIcon icon){
+        BufferedImage bi = new BufferedImage(
+            icon.getIconWidth(),
+            icon.getIconHeight(),
+            BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        // paint the Icon to the BufferedImage.
+        icon.paintIcon(null, g, 0,0);
+        g.dispose();
+        
+        return bi;
+    }
+    
+    
+    public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ 
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+ 
+            BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);
+ 
+            bos.close();
+        } catch (IOException e) {
+            
+        }
+        return imageString;
+    }
+    
+    
+    public static BufferedImage decodeToImage(String imageString) {
+ 
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+
+        }
+        return image;
     }
     
     /**
