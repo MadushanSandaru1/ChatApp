@@ -7,7 +7,17 @@ package app.interfaces;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -178,7 +188,9 @@ public class Login extends javax.swing.JFrame {
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
                 .addComponent(titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(minimize)
+                .addGap(0, 0, 0)
                 .addComponent(close)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -492,8 +504,7 @@ public class Login extends javax.swing.JFrame {
         signup_error.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
         signup_error.setForeground(new java.awt.Color(206, 47, 131));
         signup_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        signup_error.setText("username and password are required");
-        signup_panel.add(signup_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 310, -1));
+        signup_panel.add(signup_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 310, 20));
 
         signin_link.setBackground(new java.awt.Color(28, 36, 47));
         signin_link.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
@@ -855,7 +866,7 @@ public class Login extends javax.swing.JFrame {
         layered_pane.setLayout(layered_paneLayout);
         layered_paneLayout.setHorizontalGroup(
             layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(signin_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(signin_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
             .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(signup_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -871,8 +882,8 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layered_paneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(setting_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(setting_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(17, Short.MAX_VALUE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layered_paneLayout.createSequentialGroup()
                     .addContainerGap()
@@ -887,15 +898,15 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(signin_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
-                    .addGap(0, 30, Short.MAX_VALUE)
+                    .addGap(0, 32, Short.MAX_VALUE)
                     .addComponent(signup_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
-                    .addGap(0, 30, Short.MAX_VALUE)
+                    .addGap(0, 32, Short.MAX_VALUE)
                     .addComponent(forgot_password_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
-                    .addGap(0, 30, Short.MAX_VALUE)
+                    .addGap(0, 32, Short.MAX_VALUE)
                     .addComponent(chat_list_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
@@ -906,7 +917,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layered_paneLayout.createSequentialGroup()
                     .addGap(9, 9, 9)
                     .addComponent(setting_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(21, Short.MAX_VALUE)))
+                    .addContainerGap(23, Short.MAX_VALUE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
                     .addContainerGap(19, Short.MAX_VALUE)
@@ -1091,7 +1102,23 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_signin_link_hoverMouseClicked
 
     private void signup_profile_picMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_profile_picMouseClicked
-        
+        JFileChooser chooser = new JFileChooser(); //open image file file
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png"); //set image type filter
+        chooser.setFileFilter(filter); //filter
+        int returnVal = chooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) { //if image selected
+            File file = chooser.getSelectedFile(); //get selected file
+            String strfilepath = file.getAbsolutePath(); //get abs path
+//            System.out.println(strfilepath);
+           try{
+            ImageIcon icon = new ImageIcon(strfilepath); //string image path open as a image icon
+            ImageIcon iconresized =  new ImageIcon(icon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)); //resize image icon fit for profile icon label
+            signup_profile_pic.setText(null); // remove label text
+            signup_profile_pic.setIcon(iconresized); //set seleted image to profile icon label
+           }catch(Exception e){
+               System.out.println("Exception occurred : " + e.getMessage());
+           }
+        }
     }//GEN-LAST:event_signup_profile_picMouseClicked
 
     private void titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlebarMousePressed
@@ -1202,6 +1229,21 @@ public class Login extends javax.swing.JFrame {
 
     private void signup_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseClicked
         signup_default();
+        
+        String email = signup_email.getText();
+        String username  = signup_username.getText();
+        String nickname = signup_nickname.getText();
+        String password = signup_password.getText();
+        
+        ArrayList<String> erorr = validateform(email,username,nickname,password);
+        
+        if(erorr.isEmpty()==false){
+            signup_error.setText(erorr.get(0));
+        }else{
+            signup_error.setText(null);
+        }
+        
+        
     }//GEN-LAST:event_signup_btnMouseClicked
 
     public void signin_default() {
@@ -1280,6 +1322,34 @@ public class Login extends javax.swing.JFrame {
         chat_area_panel.setVisible(false);
         setting_panel.setVisible(false);
         update_panel.setVisible(true);
+    }
+    
+    
+    public ArrayList<String> validateform(String email,String username,String nickname,String password){
+        
+        ArrayList<String> errors = new ArrayList<String>();
+        
+        if(email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")==false){
+            errors.add("Invalid email");
+        }
+        
+        if("Username".equals(username) || "".equals(username)){
+            errors.add("Username is requird");
+        }
+        
+        if("Password".equals(password) || "".equals(password)){
+            errors.add("Password is requird");
+        }
+        
+        if(password.length()<7){
+            errors.add("Password must contain more than 8 characters");
+        }
+        
+        if("Nick name".equals(nickname) || "".equals(nickname)){
+            errors.add("Nickname is requird");
+        }
+        
+        return errors;
     }
     
     /**
