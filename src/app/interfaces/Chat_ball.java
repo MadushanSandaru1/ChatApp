@@ -5,6 +5,7 @@
  */
 package app.interfaces;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -22,6 +23,8 @@ public class Chat_ball extends javax.swing.JFrame {
     
     public Chat_ball() {
         initComponents();
+        
+        setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         
         Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screen_size.width-80, 150);
