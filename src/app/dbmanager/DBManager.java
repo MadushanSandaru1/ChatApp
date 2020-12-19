@@ -3,8 +3,13 @@ package app.dbmanager;
 
 import app.controller.Connection;
 import app.pojos.User;
+import java.util.List;
+import java.util.Iterator;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+
 
 public class DBManager {
     
@@ -22,7 +27,7 @@ public class DBManager {
     }
     
     
-    public boolean insert (String avatar64based,String email,String username,String nickname,String password){
+    public boolean insert (byte[] avatar64based,String email,String username,String nickname,String password){
         Session s = Connection.getSessionFactory().openSession();
         Transaction t = s.beginTransaction();
         User user = new User();
@@ -38,10 +43,18 @@ public class DBManager {
         t.commit();
         s.close();
 
-          //user.setAvatar();
-          System.out.println("succes");
+    
+         System.out.println("succes");
         return false;
         
+    }
+    
+    public List login(String username,String password) {
+        Session sess=Connection.getSessionFactory().openSession();
+        String sql="FROM User WHERE username='"+username+"' AND password='"+password+"'";
+        Query qu=sess.createQuery(sql);
+        List User =  qu.list();
+        return User;
     }
     
 }

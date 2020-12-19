@@ -6,9 +6,12 @@
 package app.interfaces;
 
 import app.dbmanager.DBManager;
+import app.pojos.User;
+import java.awt.DefaultKeyboardFocusManager;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.List;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -16,9 +19,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -32,16 +41,15 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    
     static int xx, yy;
     static Chat_ball chat_ball;
-    
+
     public Login() {
         initComponents();
-        
+
         Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(screen_size.width-425, getY());
-        
+        setLocation(screen_size.width - 425, getY());
+
         //when app on
         signin_panel.setVisible(true);
         signup_panel.setVisible(false);
@@ -50,7 +58,7 @@ public class Login extends javax.swing.JFrame {
         chat_area_panel.setVisible(false);
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
-        
+
         signin_default();
     }
 
@@ -119,12 +127,15 @@ public class Login extends javax.swing.JFrame {
         chat_list_panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        users_name = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         chat_area_panel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         setting_panel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         update_panel = new javax.swing.JPanel();
         signup_profile_pic1 = new javax.swing.JLabel();
         signup_email1 = new javax.swing.JTextField();
@@ -219,7 +230,6 @@ public class Login extends javax.swing.JFrame {
         username.setBackground(new java.awt.Color(28, 36, 47));
         username.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
         username.setForeground(new java.awt.Color(111, 117, 124));
-        username.setText("Username");
         username.setAutoscrolls(false);
         username.setBorder(null);
         username.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -244,7 +254,6 @@ public class Login extends javax.swing.JFrame {
         password.setBackground(new java.awt.Color(28, 36, 47));
         password.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
         password.setForeground(new java.awt.Color(111, 117, 124));
-        password.setText("Password");
         password.setBorder(null);
         password.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -254,6 +263,11 @@ public class Login extends javax.swing.JFrame {
         password.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 passwordMouseClicked(evt);
+            }
+        });
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordActionPerformed(evt);
             }
         });
         signin_panel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 220, 20));
@@ -292,7 +306,6 @@ public class Login extends javax.swing.JFrame {
         signin_error.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
         signin_error.setForeground(new java.awt.Color(206, 47, 131));
         signin_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        signin_error.setText("username and password are required");
         signin_panel.add(signin_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 310, -1));
 
         forgot_password.setEditable(false);
@@ -657,6 +670,17 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/setting_pink.png"))); // NOI18N
         chat_list_panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
 
+        users_name.setBackground(new java.awt.Color(255, 255, 255));
+        users_name.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        users_name.setForeground(new java.awt.Color(255, 255, 255));
+        users_name.setText("Login success");
+        chat_list_panel.add(users_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 120, 40));
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("user");
+        chat_list_panel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 66, 40, 30));
+
         chat_area_panel.setBackground(new java.awt.Color(28, 36, 47));
         chat_area_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -678,6 +702,10 @@ public class Login extends javax.swing.JFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/setting_pink.png"))); // NOI18N
         setting_panel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 30, 30));
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Admin");
+        setting_panel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         update_panel.setBackground(new java.awt.Color(28, 36, 47));
         update_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -869,7 +897,7 @@ public class Login extends javax.swing.JFrame {
         layered_pane.setLayout(layered_paneLayout);
         layered_paneLayout.setHorizontalGroup(
             layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(signin_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+            .addComponent(signin_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
             .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(signup_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -886,7 +914,7 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layered_paneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(setting_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(17, Short.MAX_VALUE)))
+                    .addContainerGap(23, Short.MAX_VALUE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layered_paneLayout.createSequentialGroup()
                     .addContainerGap()
@@ -913,7 +941,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(chat_list_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addContainerGap(26, Short.MAX_VALUE)
                     .addComponent(chat_area_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,7 +951,7 @@ public class Login extends javax.swing.JFrame {
                     .addContainerGap(23, Short.MAX_VALUE)))
             .addGroup(layered_paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layered_paneLayout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
+                    .addContainerGap(26, Short.MAX_VALUE)
                     .addComponent(update_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -968,17 +996,17 @@ public class Login extends javax.swing.JFrame {
 
     private void eye_open_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_open_iconMouseClicked
         if (password.getText().trim().equalsIgnoreCase("password")) {
-            
+
         } else {
             eye_close_icon.setVisible(true);
             eye_open_icon.setVisible(false);
-            password.setEchoChar((char)0);
+            password.setEchoChar((char) 0);
         }
     }//GEN-LAST:event_eye_open_iconMouseClicked
 
     private void eye_close_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_close_iconMouseClicked
         if (password.getText().trim().equalsIgnoreCase("password")) {
-            
+
         } else {
             eye_open_icon.setVisible(true);
             eye_close_icon.setVisible(false);
@@ -1001,7 +1029,7 @@ public class Login extends javax.swing.JFrame {
     private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
         if (password.getText().trim().equalsIgnoreCase("")) {
             password.setText("Password");
-            password.setEchoChar((char)0);
+            password.setEchoChar((char) 0);
         }
     }//GEN-LAST:event_passwordFocusLost
 
@@ -1027,7 +1055,7 @@ public class Login extends javax.swing.JFrame {
     private void signup_passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_signup_passwordFocusLost
         if (signup_password.getText().trim().equalsIgnoreCase("")) {
             signup_password.setText("Password");
-            signup_password.setEchoChar((char)0);
+            signup_password.setEchoChar((char) 0);
         }
     }//GEN-LAST:event_signup_passwordFocusLost
 
@@ -1040,17 +1068,17 @@ public class Login extends javax.swing.JFrame {
 
     private void signup_eye_open_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_open_iconMouseClicked
         if (signup_password.getText().trim().equalsIgnoreCase("password")) {
-            
+
         } else {
             signup_eye_close_icon.setVisible(true);
             signup_eye_open_icon.setVisible(false);
-            signup_password.setEchoChar((char)0);
+            signup_password.setEchoChar((char) 0);
         }
     }//GEN-LAST:event_signup_eye_open_iconMouseClicked
 
     private void signup_eye_close_iconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_eye_close_iconMouseClicked
         if (signup_password.getText().trim().equalsIgnoreCase("password")) {
-            
+
         } else {
             signup_eye_open_icon.setVisible(true);
             signup_eye_close_icon.setVisible(false);
@@ -1109,24 +1137,23 @@ public class Login extends javax.swing.JFrame {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png"); //set image type filter
         chooser.setFileFilter(filter); //filter
         int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) { //if image selected
+        if (returnVal == JFileChooser.APPROVE_OPTION) { //if image selected
             File file = chooser.getSelectedFile(); //get selected file
             String strfilepath = file.getAbsolutePath(); //get abs path
 //            System.out.println(strfilepath);
-           try{
-            ImageIcon icon = new ImageIcon(strfilepath); //string image path open as a image icon
-            ImageIcon iconresized =  new ImageIcon(icon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)); //resize image icon fit for profile icon label
-            signup_profile_pic.setText(null); // remove label text
-            signup_profile_pic.setIcon(iconresized); //set seleted image to profile icon label 
-            
+            try {
+                ImageIcon icon = new ImageIcon(strfilepath); //string image path open as a image icon
+                ImageIcon iconresized = new ImageIcon(icon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)); //resize image icon fit for profile icon label
+                signup_profile_pic.setText(null); // remove label text
+                signup_profile_pic.setIcon(iconresized); //set seleted image to profile icon label 
+
 //               String img = this.encodeToString(this.ImageIconToBufferedImage(iconresized),"jpg"); 
 //               BufferedImage bimg = this.decodeToImage(img);
 //               
 //               signup_profile_pic.setIcon(new ImageIcon(bimg));
-
-           }catch(Exception e){
-               System.out.println("Exception occurred : " + e.getMessage());
-           }
+            } catch (Exception e) {
+                System.out.println("Exception occurred : " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_signup_profile_picMouseClicked
 
@@ -1138,8 +1165,8 @@ public class Login extends javax.swing.JFrame {
     private void titlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlebarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-                
-        this.setLocation(x-xx, y-yy);
+
+        this.setLocation(x - xx, y - yy);
     }//GEN-LAST:event_titlebarMouseDragged
 
     private void fp_signin_linkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fp_signin_linkMouseEntered
@@ -1233,38 +1260,75 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_signin_link_hover1MouseExited
 
     private void signin_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signin_btnMouseClicked
-        chat_list_default();
+
+        String user_name = username.getText();
+        String user_pwd = password.getText();
+
+//        if(user_name.equals(" ")){
+        List data = DBManager.getDBM().login(user_name, user_pwd);
+        Iterator i = data.iterator();
+        if (i.hasNext()) {
+            User user = (User) i.next();
+            if (user.getId().equals(1)) {
+                System.out.println(user.getUsername());
+                setting_default();
+            } else {
+                chat_list_default();
+                users_name.setText(user.getNickname());
+            }
+
+        } else {
+            System.out.println("no user");
+            signin_error.setText("Username or Password Incorrect");
+        }
+//        }else{
+//            signin_error.setText("Username and Password Required");
+//        }
     }//GEN-LAST:event_signin_btnMouseClicked
 
     private void signup_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseClicked
         signup_default();
-        
+
         //get data from text boxes
         String email = signup_email.getText();
-        String username  = signup_username.getText();
+        String username = signup_username.getText();
         String nickname = signup_nickname.getText();
         String password = signup_password.getText();
-        
+
         //error array
-        ArrayList<String> error = validateform(email,username,nickname,password);
-        
-        if(error.isEmpty()==false){
+        ArrayList<String> error = validateform(email, username, nickname, password);
+
+        if (error.isEmpty() == false) {
             signup_error.setText(error.get(0));
-        }else{
+        } else {
             signup_error.setText(null);
             //intsert details
-            String img = null;
+            byte[] img = null;
             ImageIcon avatar = (ImageIcon) signup_profile_pic.getIcon();
-            if(avatar!=null){
-                img = this.encodeToString(this.ImageIconToBufferedImage(avatar),"jpg"); 
+            if (avatar != null) {
+                try {
+                    //                img = this.encodeToString(this.ImageIconToBufferedImage(avatar),"jpg");
+                    BufferedImage bImage = ImageIconToBufferedImage(avatar);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ImageIO.write(bImage, "jpg", bos);
+                    img = bos.toByteArray();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
 
             DBManager.getDBM().insert(img, email, username, nickname, password);
-            
+
         }
-        
-        
+
+
     }//GEN-LAST:event_signup_btnMouseClicked
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
 
     public void signin_default() {
         signin_panel.setVisible(true);
@@ -1274,12 +1338,12 @@ public class Login extends javax.swing.JFrame {
         chat_area_panel.setVisible(false);
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
-        
-        password.setEchoChar((char)0);
+
+        password.setEchoChar((char) 0);
         eye_open_icon.setVisible(true);
         eye_close_icon.setVisible(false);
     }
-    
+
     public void signup_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(true);
@@ -1288,12 +1352,12 @@ public class Login extends javax.swing.JFrame {
         chat_area_panel.setVisible(false);
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
-        
-        signup_password.setEchoChar((char)0);
+
+        signup_password.setEchoChar((char) 0);
         signup_eye_open_icon.setVisible(true);
         signup_eye_close_icon.setVisible(false);
     }
-    
+
     public void forgot_password_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(false);
@@ -1303,7 +1367,7 @@ public class Login extends javax.swing.JFrame {
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
     }
-    
+
     public void chat_list_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(false);
@@ -1313,7 +1377,7 @@ public class Login extends javax.swing.JFrame {
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
     }
-    
+
     public void chat_area_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(false);
@@ -1323,7 +1387,7 @@ public class Login extends javax.swing.JFrame {
         setting_panel.setVisible(false);
         update_panel.setVisible(false);
     }
-    
+
     public void setting_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(false);
@@ -1333,7 +1397,7 @@ public class Login extends javax.swing.JFrame {
         setting_panel.setVisible(true);
         update_panel.setVisible(false);
     }
-    
+
     public void update_default() {
         signin_panel.setVisible(false);
         signup_panel.setVisible(false);
@@ -1343,84 +1407,81 @@ public class Login extends javax.swing.JFrame {
         setting_panel.setVisible(false);
         update_panel.setVisible(true);
     }
-    
-    
-    public ArrayList<String> validateform(String email,String username,String nickname,String password){
-        
+
+    public ArrayList<String> validateform(String email, String username, String nickname, String password) {
+
         ArrayList<String> errors = new ArrayList<String>();
-        
-        if(email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")==false){
+
+        if (email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$") == false) {
             errors.add("Invalid email");
         }
-        
-        if("Username".equals(username) || "".equals(username)){
+
+        if ("Username".equals(username) || "".equals(username)) {
             errors.add("Username is requird");
         }
-        
-        if("Password".equals(password) || "".equals(password)){
+
+        if ("Password".equals(password) || "".equals(password)) {
             errors.add("Password is requird");
         }
-        
-        if(password.length()<7){
+
+        if (password.length() < 7) {
             errors.add("Password must contain more than 8 characters");
         }
-        
-        if("Nick name".equals(nickname) || "".equals(nickname)){
+
+        if ("Nick name".equals(nickname) || "".equals(nickname)) {
             errors.add("Nickname is requird");
         }
-        
+
         return errors;
     }
-    
-    public BufferedImage ImageIconToBufferedImage(ImageIcon icon){
+
+    public BufferedImage ImageIconToBufferedImage(ImageIcon icon) {
         BufferedImage bi = new BufferedImage(
-            icon.getIconWidth(),
-            icon.getIconHeight(),
-            BufferedImage.TYPE_INT_RGB);
+                icon.getIconWidth(),
+                icon.getIconHeight(),
+                BufferedImage.TYPE_INT_RGB);
         Graphics g = bi.createGraphics();
         // paint the Icon to the BufferedImage.
-        icon.paintIcon(null, g, 0,0);
+        icon.paintIcon(null, g, 0, 0);
         g.dispose();
-        
+
         return bi;
     }
-    
-    
-    public static String encodeToString(BufferedImage image, String type) {
-        String imageString = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
- 
-        try {
-            ImageIO.write(image, type, bos);
-            byte[] imageBytes = bos.toByteArray();
- 
-            BASE64Encoder encoder = new BASE64Encoder();
-            imageString = encoder.encode(imageBytes);
- 
-            bos.close();
-        } catch (IOException e) {
-            
-        }
-        return imageString;
-    }
-    
-    
-    public static BufferedImage decodeToImage(String imageString) {
- 
-        BufferedImage image = null;
-        byte[] imageByte;
-        try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            bis.close();
-        } catch (Exception e) {
 
-        }
-        return image;
-    }
-    
+//    public static String encodeToString(BufferedImage image, String type) {
+//        String imageString = null;
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//
+//        try {
+//            ImageIO.write(image, type, bos);
+//            byte[] imageBytes = bos.toByteArray();
+//
+//            BASE64Encoder encoder = new BASE64Encoder();
+//            imageString = encoder.encode(imageBytes);
+//
+//            bos.close();
+//        } catch (IOException e) {
+//
+//        }
+//        return imageString;
+//    }
+
+//    public static BufferedImage decodeToImage(String imageString) {
+//
+//        BufferedImage image = null;
+//        byte[] imageByte;
+//        try {
+//            BASE64Decoder decoder = new BASE64Decoder();
+//            imageByte = decoder.decodeBuffer(imageString);
+//            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+//            image = ImageIO.read(bis);
+//            bis.close();
+//        } catch (Exception e) {
+//
+//        }
+//        return image;
+//    }
+
     /**
      * @param args the command line arguments
      */
@@ -1477,11 +1538,13 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField fp_signin_link;
     private javax.swing.JTextField fp_signin_link_hover;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane layered_pane;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel minimize;
@@ -1537,5 +1600,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField username;
     private javax.swing.JLabel username_icon;
     private javax.swing.JLabel username_line;
+    private javax.swing.JLabel users_name;
     // End of variables declaration//GEN-END:variables
 }
