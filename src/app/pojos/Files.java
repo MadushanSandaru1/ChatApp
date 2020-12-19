@@ -1,5 +1,5 @@
 package app.pojos;
-// Generated Dec 18, 2020 5:10:53 PM by Hibernate Tools 4.3.1
+// Generated Dec 19, 2020 11:28:01 PM by Hibernate Tools 4.3.1
 
 
 

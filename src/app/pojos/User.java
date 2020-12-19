@@ -1,5 +1,5 @@
 package app.pojos;
-// Generated Dec 18, 2020 5:10:53 PM by Hibernate Tools 4.3.1
+// Generated Dec 19, 2020 11:28:01 PM by Hibernate Tools 4.3.1
 
 
 
@@ -13,28 +13,31 @@ public class User  implements java.io.Serializable {
      private String username;
      private String nickname;
      private String email;
-     private String avatar;
+     private byte[] avatar;
      private int isDeleted;
      private String password;
+     private int roleId;
 
     public User() {
     }
 
 	
-    public User(String username, String nickname, String email, int isDeleted, String password) {
+    public User(String username, String nickname, String email, int isDeleted, String password, int roleId) {
         this.username = username;
         this.nickname = nickname;
         this.email = email;
         this.isDeleted = isDeleted;
         this.password = password;
+        this.roleId = roleId;
     }
-    public User(String username, String nickname, String email, String avatar, int isDeleted, String password) {
+    public User(String username, String nickname, String email, byte[] avatar, int isDeleted, String password, int roleId) {
        this.username = username;
        this.nickname = nickname;
        this.email = email;
        this.avatar = avatar;
        this.isDeleted = isDeleted;
        this.password = password;
+       this.roleId = roleId;
     }
    
     public Integer getId() {
@@ -65,11 +68,11 @@ public class User  implements java.io.Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return this.avatar;
     }
     
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
     public int getIsDeleted() {
@@ -85,6 +88,13 @@ public class User  implements java.io.Serializable {
     
     public void setPassword(String password) {
         this.password = password;
+    }
+    public int getRoleId() {
+        return this.roleId;
+    }
+    
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
 
