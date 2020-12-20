@@ -57,4 +57,22 @@ public class DBManager {
         return User;
     }
     
+    public void update(byte[] img,String email,String username,String nickname,int id){
+       Session s=Connection.getSessionFactory().openSession();
+       Transaction tran=s.beginTransaction();
+       
+       User user=(User) s.load(User.class, id);
+       user.setEmail(email);
+       user.setNickname(nickname);
+       
+       s.update(user);
+       tran.commit();
+       System.out.println("Update success..");
+       s.close();
+    }
+
+    public void cahge_pwd(String password) {
+        
+    }
+    
 }
