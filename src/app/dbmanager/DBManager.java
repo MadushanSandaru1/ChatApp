@@ -37,6 +37,7 @@ public class DBManager {
         user.setUsername(username);
         user.setNickname(nickname);
         user.setPassword(password);
+        user.setRoleId(2);
         user.setIsDeleted(0);
         
         s.save(user);
