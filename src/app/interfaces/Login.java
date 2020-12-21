@@ -7,40 +7,41 @@ package app.interfaces;
 
 import app.dbmanager.DBManager;
 import app.pojos.User;
-import java.awt.DefaultKeyboardFocusManager;
+import app.services.Chat;
+import app.services.ChatService;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
-/**
- *
- * @author Sandaru
- */
+
+
+
+
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    
+    Registry reg;
+    Chat chat;
+    
     static int xx, yy;
     static Chat_ball chat_ball;
     int  id;
@@ -1364,11 +1365,25 @@ public class Login extends javax.swing.JFrame {
         if (i.hasNext()) {
             User user = (User) i.next();
             if (user.getRoleId()==1) {
+
+                //admin
+
                 System.out.println(user.getUsername());
                 setting_default();
-//                update_email.setText(user.getEmail());
+
+                
+                //start server
+                this.start_server();
+
             } else {
+                //client
                 chat_list_default();
+
+                users_name.setText(user.getNickname());
+                
+                //start client
+                this.start_client();
+
             }
             users_name.setText(user.getNickname());
             this.id=user.getId();
@@ -1653,6 +1668,74 @@ public class Login extends javax.swing.JFrame {
 
         return bi;
     }
+    
+    
+    public void start_client(){
+
+        try {
+            reg = LocateRegistry.getRegistry("localhost", 2123);
+            chat = (Chat) reg.lookup("ChatAdmin");
+            retrivemsg.start();
+        } catch (RemoteException | NotBoundException ex) {
+            System.out.println(ex);
+        }
+    
+
+    }
+    
+    
+       Thread retrivemsg = new Thread() {
+        public void run() {
+            
+            int preiv = 0;
+            
+            while (true) {
+                try {
+                    
+                    Message nmsg = chat.broadcast();
+                    if(nmsg!=null){
+                        if (preiv!=nmsg.getMsgid()) {
+                            System.out.println(nmsg.getDate_time()+"\t"+ nmsg.getName()+ " : " + nmsg.getMessage()+"\n" );
+                            preiv = nmsg.getMsgid();
+                        }
+                    }
+                    
+                    
+                    
+                    
+//                    if(newmsg!=preiv){
+//                        System.out.println(chat.broadcast().getMessage());
+//                        preiv = newmsg;
+//                    }
+                    
+                    Thread.sleep(100);
+                } catch (RemoteException | NullPointerException ex) {
+                    System.out.println(ex);
+                } catch (InterruptedException ex) {
+                    
+                }
+            }
+
+        }
+    };
+    
+    
+    
+    
+    
+    public void start_server(){
+        try {
+            Chat chat = new ChatService();
+            Registry reg = LocateRegistry.createRegistry(2123);
+            reg.bind("ChatAdmin", chat);
+            
+            System.out.println("Chat server is running...");
+            
+        } catch (RemoteException | AlreadyBoundException e) {
+            System.out.println("Exception ocured : " + e.getMessage());
+        }
+    }
+    
 
 //    public static String encodeToString(BufferedImage image, String type) {
 //        String imageString = null;
