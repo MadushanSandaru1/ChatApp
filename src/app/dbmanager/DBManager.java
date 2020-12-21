@@ -57,7 +57,7 @@ public class DBManager {
         return User;
     }
     
-    public void update(byte[] img,String email,String username,String nickname,int id){
+    public void update(byte[] img,String email,String nickname,int id){
        Session s=Connection.getSessionFactory().openSession();
        Transaction tran=s.beginTransaction();
        
