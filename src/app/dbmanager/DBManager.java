@@ -72,8 +72,8 @@ public class DBManager {
        s.close();
     }
 
-    public void cahge_pwd(String password) {
-        
-    }
+     public void chang_pwd(String current_password){
+         Session s=Connection.getSessionFactory().openSession();
+     }
     
 }
