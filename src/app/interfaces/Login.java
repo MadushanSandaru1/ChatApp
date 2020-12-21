@@ -141,7 +141,6 @@ public class Login extends javax.swing.JFrame {
         setting_previous = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         update_pwd_panel = new javax.swing.JPanel();
-        update_profile_pic = new javax.swing.JLabel();
         new_pwd = new javax.swing.JTextField();
         signup_email_line1 = new javax.swing.JLabel();
         new_pwd2 = new javax.swing.JTextField();
@@ -152,7 +151,7 @@ public class Login extends javax.swing.JFrame {
         signin_link_hover1 = new javax.swing.JTextField();
         signup_copyrights1 = new javax.swing.JLabel();
         signup_footer1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         update_panel = new javax.swing.JPanel();
         update_profile_pic1 = new javax.swing.JLabel();
         update_email = new javax.swing.JTextField();
@@ -767,19 +766,6 @@ public class Login extends javax.swing.JFrame {
         update_pwd_panel.setBackground(new java.awt.Color(28, 36, 47));
         update_pwd_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        update_profile_pic.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
-        update_profile_pic.setForeground(new java.awt.Color(111, 117, 124));
-        update_profile_pic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        update_profile_pic.setText("Profile Picture");
-        update_profile_pic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(111, 117, 124), 2));
-        update_profile_pic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        update_profile_pic.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                update_profile_picMouseClicked(evt);
-            }
-        });
-        update_pwd_panel.add(update_profile_pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 120, 120));
-
         new_pwd.setBackground(new java.awt.Color(28, 36, 47));
         new_pwd.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
         new_pwd.setForeground(new java.awt.Color(111, 117, 124));
@@ -796,11 +782,11 @@ public class Login extends javax.swing.JFrame {
                 new_pwdMouseClicked(evt);
             }
         });
-        update_pwd_panel.add(new_pwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 240, 20));
+        update_pwd_panel.add(new_pwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 240, 20));
 
         signup_email_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
         signup_email_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        update_pwd_panel.add(signup_email_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, 10));
+        update_pwd_panel.add(signup_email_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, 10));
 
         new_pwd2.setBackground(new java.awt.Color(28, 36, 47));
         new_pwd2.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
@@ -818,15 +804,15 @@ public class Login extends javax.swing.JFrame {
                 new_pwd2MouseClicked(evt);
             }
         });
-        update_pwd_panel.add(new_pwd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 240, 20));
+        update_pwd_panel.add(new_pwd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 240, 20));
 
         signup_username_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
         signup_username_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        update_pwd_panel.add(signup_username_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, 10));
+        update_pwd_panel.add(signup_username_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, 10));
 
         signup_nickname_line1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/hrline.png"))); // NOI18N
         signup_nickname_line1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        update_pwd_panel.add(signup_nickname_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, 10));
+        update_pwd_panel.add(signup_nickname_line1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, 10));
 
         current_pwd.setBackground(new java.awt.Color(28, 36, 47));
         current_pwd.setFont(new java.awt.Font("Bookman Old Style", 0, 11)); // NOI18N
@@ -844,7 +830,7 @@ public class Login extends javax.swing.JFrame {
                 current_pwdMouseClicked(evt);
             }
         });
-        update_pwd_panel.add(current_pwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 240, 20));
+        update_pwd_panel.add(current_pwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 240, 20));
 
         success_msg.setFont(new java.awt.Font("Bookman Old Style", 0, 12)); // NOI18N
         success_msg.setForeground(new java.awt.Color(206, 47, 131));
@@ -872,7 +858,7 @@ public class Login extends javax.swing.JFrame {
                 signin_link_hover1ActionPerformed(evt);
             }
         });
-        update_pwd_panel.add(signin_link_hover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 50, 20));
+        update_pwd_panel.add(signin_link_hover1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, 50, 20));
 
         signup_copyrights1.setFont(new java.awt.Font("Bookman Old Style", 0, 10)); // NOI18N
         signup_copyrights1.setForeground(new java.awt.Color(255, 255, 255));
@@ -883,13 +869,13 @@ public class Login extends javax.swing.JFrame {
         signup_footer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/footer.gif"))); // NOI18N
         update_pwd_panel.add(signup_footer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 375, 130));
 
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("change password");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
-        update_pwd_panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+        update_pwd_panel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, -1));
 
         update_panel.setBackground(new java.awt.Color(28, 36, 47));
         update_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1318,10 +1304,6 @@ public class Login extends javax.swing.JFrame {
         forgot_password_default();
     }//GEN-LAST:event_forgot_password_hoverMouseClicked
 
-    private void update_profile_picMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update_profile_picMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_update_profile_picMouseClicked
-
     private void new_pwdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_new_pwdFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_new_pwdFocusLost
@@ -1365,25 +1347,17 @@ public class Login extends javax.swing.JFrame {
         if (i.hasNext()) {
             User user = (User) i.next();
             if (user.getRoleId()==1) {
-
                 //admin
-
                 System.out.println(user.getUsername());
                 setting_default();
-
-                
                 //start server
                 this.start_server();
-
             } else {
                 //client
                 chat_list_default();
-
                 users_name.setText(user.getNickname());
-                
                 //start client
                 this.start_client();
-
             }
             users_name.setText(user.getNickname());
             this.id=user.getId();
@@ -1452,10 +1426,6 @@ public class Login extends javax.swing.JFrame {
         update_default();
     }//GEN-LAST:event_chatlist_settingMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void signin_link_hover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signin_link_hover1ActionPerformed
         
     }//GEN-LAST:event_signin_link_hover1ActionPerformed
@@ -1482,9 +1452,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String email = update_email.getText().trim();
-//        String username = update_username.getText().trim();
         String nickname = update_nickname.getText().trim();
-//        String password = update_password.getText().trim();
         byte[] update_img=null;
         
         DBManager.getDBM().update(update_img, email, nickname,id);
@@ -1510,6 +1478,11 @@ public class Login extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         chang_password_default();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String current_password=current_pwd.getText().trim();
+        DBManager.getDBM().chang_pwd(current_password);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public void signin_default() {
         signin_panel.setVisible(true);
@@ -1832,8 +1805,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel fp_resend_code;
     private javax.swing.JTextField fp_signin_link;
     private javax.swing.JTextField fp_signin_link_hover;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -1892,7 +1865,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField update_email;
     private javax.swing.JTextField update_nickname;
     private javax.swing.JPanel update_panel;
-    private javax.swing.JLabel update_profile_pic;
     private javax.swing.JLabel update_profile_pic1;
     private javax.swing.JPanel update_pwd_panel;
     private javax.swing.JTextField username;
