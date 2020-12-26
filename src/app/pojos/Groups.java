@@ -1,5 +1,5 @@
 package app.pojos;
-// Generated Dec 20, 2020 12:16:27 AM by Hibernate Tools 4.3.1
+// Generated Dec 22, 2020 12:15:00 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,27 +11,25 @@ public class Groups  implements java.io.Serializable {
 
 
      private Integer id;
-     private byte[] icon;
      private String name;
      private String description;
      private Date createdDate;
      private Date createdTime;
-     private byte status;
-     private byte isDeleted;
+     private int status;
+     private int isDeleted;
 
     public Groups() {
     }
 
 	
-    public Groups(String name, Date createdDate, Date createdTime, byte status, byte isDeleted) {
+    public Groups(String name, Date createdDate, Date createdTime, int status, int isDeleted) {
         this.name = name;
         this.createdDate = createdDate;
         this.createdTime = createdTime;
         this.status = status;
         this.isDeleted = isDeleted;
     }
-    public Groups(byte[] icon, String name, String description, Date createdDate, Date createdTime, byte status, byte isDeleted) {
-       this.icon = icon;
+    public Groups(String name, String description, Date createdDate, Date createdTime, int status, int isDeleted) {
        this.name = name;
        this.description = description;
        this.createdDate = createdDate;
@@ -46,13 +44,6 @@ public class Groups  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
-    }
-    public byte[] getIcon() {
-        return this.icon;
-    }
-    
-    public void setIcon(byte[] icon) {
-        this.icon = icon;
     }
     public String getName() {
         return this.name;
@@ -82,18 +73,18 @@ public class Groups  implements java.io.Serializable {
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
-    public byte getStatus() {
+    public int getStatus() {
         return this.status;
     }
     
-    public void setStatus(byte status) {
+    public void setStatus(int status) {
         this.status = status;
     }
-    public byte getIsDeleted() {
+    public int getIsDeleted() {
         return this.isDeleted;
     }
     
-    public void setIsDeleted(byte isDeleted) {
+    public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
 

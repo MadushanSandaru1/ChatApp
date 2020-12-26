@@ -20,14 +20,20 @@ public class Chat_ball extends javax.swing.JFrame {
      */
     
     static int yy;
-    
-    public Chat_ball() {
+
+    public Chat_ball(Login login) {
         initComponents();
         
         setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
         
         Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screen_size.width-80, 150);
+        
+        this.login = login;
+    }
+    Login login;
+    
+    public Chat_ball() {
         
     }
 
@@ -48,6 +54,7 @@ public class Chat_ball extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/images/chat_ball_pink.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jLabel1MouseDragged(evt);
@@ -81,7 +88,8 @@ public class Chat_ball extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseDragged
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        
+        login.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     /**

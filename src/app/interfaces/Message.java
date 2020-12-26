@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     private int msgid;
+    private int userid;
     private String name;
     private String message;
     private String date_time;
@@ -43,4 +44,14 @@ public class Message implements Serializable {
         this.date_time = date_time;
     }
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    
+    
 }
